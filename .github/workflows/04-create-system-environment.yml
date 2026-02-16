@@ -1,0 +1,82 @@
+
+name:                                             04 - Create SYSTEM environment
+
+on:
+  workflow_dispatch:
+    inputs:
+      system_sid:
+        description:                              "SAP System ID (SID)"
+        required:                                 true
+        type:                                     string
+        default:                                  X00
+      workload_environment:
+        description:                              "Workload Zone Name"
+        required:                                 true
+        type:                                     environment
+
+permissions:
+  issues:                                         write
+  contents:                                       write
+  actions:                                        write
+
+jobs:
+  create_system_environment:
+    name:                                         Create SYSTEM environment
+    runs-on:                                      ubuntu-latest
+    container:
+      image:                                      ${{ vars.DOCKER_IMAGE }}
+    steps:
+      - name:                                     Get app token
+        id:                                       get_workflow_token
+        uses:                                     actions/create-github-app-token@v2
+        with:
+          app-id:                                 ${{ secrets.APPLICATION_ID }}
+          private-key:                            ${{ secrets.APPLICATION_PRIVATE_KEY }}
+
+      - name:                                     Checkout repository
+        uses:                                     actions/checkout@93cb6efe18208431cddfb8368fd83d5badbf9bfd # v5.0.1
+        with:
+          fetch-depth:                            0
+          token:                                  ${{ secrets.GITHUB_TOKEN }}
+
+      - name:                                     Create SYSTEM Directory Structure
+        run:                                      |
+          WORKLOAD_ZONE_NAME=${{ github.event.inputs.workload_environment }}
+          SYSTEM_SID=${{ github.event.inputs.system_sid }}
+
+          environment=$(echo "${WORKLOAD_ZONE_NAME}" | awk -F'-' '{print $1}' | xargs)
+          region_code=$(echo "${WORKLOAD_ZONE_NAME}" | awk -F'-' '{print $2}' | xargs)
+          workload_vnet=$(echo "${WORKLOAD_ZONE_NAME}" | awk -F'-' '{print $3}' | xargs)
+
+          region_code_lower=$(echo "${region_code}" | tr '[:upper:]' '[:lower:]')
+
+          pushd /source/deploy/terraform/terraform-units/modules/sap_namegenerator
+          region=$(echo "{ for k, v in var.region_mapping : v => k }[\"${region_code_lower}\"]" | terraform console | tr -d '"')
+          popd
+
+          echo "Environment: $environment"
+          echo "Region Code: $region_code"
+          echo "Region: $region"
+          echo "Workload VNET: $workload_vnet"
+          echo "SID: $SYSTEM_SID"
+
+          system_config_name=${WORKLOAD_ZONE_NAME}-${SYSTEM_SID}
+
+          # Create WORKSPACES directory for SYSTEM
+          mkdir -p WORKSPACES/SYSTEM/${system_config_name^^}
+
+          cat .cfg_template/system.tfvars \
+            | sed "s|@@ENV@@|${environment}|g" \
+            | sed "s|@@REGION@@|${region}|g" \
+            | sed "s|@@VNET@@|${workload_vnet}|g" \
+            | sed "s|@@SID@@|${SYSTEM_SID}|g" \
+            > WORKSPACES/SYSTEM/${system_config_name^^}/${system_config_name^^}.tfvars
+
+          git config --global --add safe.directory ${GITHUB_WORKSPACE}
+          git config --global user.name "GitHub Actions"
+          git config --global user.email "sap-automation-deployer@noreply.github.com"
+
+          git add WORKSPACES
+          git commit -m "Add WORKSPACES for SYSTEM ${system_config_name^^}"
+          git pull --rebase origin main
+          git push origin main
