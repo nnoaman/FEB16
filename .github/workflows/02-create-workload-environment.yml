@@ -1,5 +1,5 @@
 
-name:                                             02 - Create workload environment
+name:                                             02 - Create Workload Environment
 
 on:
   workflow_dispatch:
