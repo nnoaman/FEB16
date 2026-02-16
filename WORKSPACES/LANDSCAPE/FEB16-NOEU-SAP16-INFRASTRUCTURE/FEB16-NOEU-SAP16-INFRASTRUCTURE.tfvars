@@ -386,3 +386,6 @@ NFS_provider = "AFS"
 
 # If provided, the tags for the NAT Gateway public IP
 #nat_gateway_public_ip_tags = {}
+
+# The parameter 'custom_random_id' can be used to control the random 3 digits at the end of the storage accounts and key vaults
+custom_random_id = "c03"
