@@ -1,0 +1,112 @@
+X00_DB:
+  hosts:
+    x00dhdb01l043:
+      ansible_host        : 10.110.96.5
+      ansible_user        : azureadm
+      ansible_connection  : ssh
+      connection_type     : key
+      virtual_host        : x00dhdb01l043
+      become_user         : root
+      os_type             : linux
+      vm_name             : FEB16-NOEU-SAP16-X00_x00dhdb01l043f
+      resource_group_name : FEB16-NOEU-SAP16-X00
+      subscription_id     : d6c8e3b6-467e-452e-97c9-49d9de9e37da
+      use_nvme_disks      : false
+
+  vars:
+    node_tier             : hana
+    supported_tiers       : [hana]
+
+X00_SCS:
+  hosts:
+    x00scs01l43f:
+      ansible_host        : 10.110.32.11
+      ansible_user        : azureadm
+      ansible_connection  : ssh
+      connection_type     : key
+      virtual_host        : x00scs01l43f
+      become_user         : root
+      os_type             : linux
+      vm_name             : FEB16-NOEU-SAP16-X00_x00scs01l43f
+      resource_group_name : FEB16-NOEU-SAP16-X00
+      subscription_id     : d6c8e3b6-467e-452e-97c9-49d9de9e37da
+      use_nvme_disks      : false
+
+  vars:
+    node_tier             : scs
+    supported_tiers       : [scs]
+
+X00_ERS:
+  hosts:
+  vars:
+    node_tier             : ers
+    supported_tiers       : [ers]
+
+X00_PAS:
+  hosts:
+    x00app01l43f:
+      ansible_host        : 10.110.32.13
+      ansible_user        : azureadm
+      ansible_connection  : ssh
+      connection_type     : key
+      virtual_host        : x00app01l43f
+      become_user         : root
+      os_type             : linux
+      vm_name             : FEB16-NOEU-SAP16-X00_x00app01l43f
+      resource_group_name : FEB16-NOEU-SAP16-X00
+      subscription_id     : d6c8e3b6-467e-452e-97c9-49d9de9e37da
+      use_nvme_disks      : false
+
+  vars:
+    node_tier             : pas
+    supported_tiers       : [pas]
+
+X00_APP:
+  hosts:
+    x00app02l43f:
+      ansible_host        : 10.110.32.12
+      ansible_user        : azureadm
+      ansible_connection  : ssh
+      connection_type     : key
+      virtual_host        : x00app02l43f
+      become_user         : root
+      os_type             : linux
+      vm_name             : FEB16-NOEU-SAP16-X00_x00app02l43f
+      resource_group_name : FEB16-NOEU-SAP16-X00
+      subscription_id     : d6c8e3b6-467e-452e-97c9-49d9de9e37da
+      use_nvme_disks      : false
+
+  vars:
+    node_tier             : app
+    supported_tiers       : [app]
+
+X00_WEB:
+  hosts:
+    x00web01l43f:
+      ansible_host        : 10.110.64.5
+      ansible_user        : azureadm
+      ansible_connection  : ssh
+      connection_type     : key
+      virtual_host        : x00web01l43f
+      become_user         : root
+      os_type             : linux
+      vm_name             : FEB16-NOEU-SAP16-X00_w00web01l43f
+      resource_group_name : FEB16-NOEU-SAP16-X00
+      subscription_id     : d6c8e3b6-467e-452e-97c9-49d9de9e37da
+      use_nvme_disks      : false
+
+  vars:
+    node_tier             : web
+    supported_tiers       : [web]
+
+X00_OBSERVER_DB:
+  hosts:
+  vars:
+    node_tier             : observer
+    supported_tiers       : [observer]
+
+X00_ISCSI:
+  hosts:
+  vars:
+    node_tier             : iscsi
+    supported_tiers       : [iscsi]
