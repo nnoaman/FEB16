@@ -33,19 +33,19 @@ location="northeurope"
 network_logical_name="SAP03"
 
 # network_address_space is a mandatory parameter when an existing virtual network is not used
-network_address_space=["10.110.0.0/16"]
+network_address_space=["172.234.0.0/22"]
 
 # admin_subnet_address_prefix is a mandatory parameter if the subnets are not defined in the workload or if existing subnets are not used
-admin_subnet_address_prefix="10.110.0.0/19"
+admin_subnet_address_prefix="172.234.0.0/25"
 
 # db_subnet_address_prefix is a mandatory parameter if the subnets are not defined in the workload or if existing subnets are not used
-db_subnet_address_prefix="10.110.96.0/19"
+db_subnet_address_prefix="172.234.1.0/24"
 
 # web_subnet_address_prefix is a mandatory parameter if the subnets are not defined in the workload or if existing subnets are not used
-web_subnet_address_prefix="10.110.64.0/24"
+web_subnet_address_prefix="172.234.2.0/24"
 
 # app_subnet_address_prefix is a mandatory parameter if the subnets are not defined in the workload or if existing subnets are not used
-app_subnet_address_prefix="10.110.32.0/19"
+app_subnet_address_prefix="172.234.3.0/25"
 
 # The automation_username defines the user account used by the automation
 automation_username="azureadm"
