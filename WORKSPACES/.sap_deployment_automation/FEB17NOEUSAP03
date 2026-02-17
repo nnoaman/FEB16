@@ -1,0 +1,6 @@
+deployer_tfstate_key=FEB16-NOEU-DEP16-INFRASTRUCTURE.terraform.tfstate
+APPLICATION_CONFIGURATION_ID=/subscriptions/d6c8e3b6-467e-452e-97c9-49d9de9e37da/resourceGroups/FEB16-NOEU-DEP16-INFRASTRUCTURE/providers/Microsoft.AppConfiguration/configurationStores/feb16noeuapc730
+CONTROL_PLANE_NAME=FEB16-NOEU-DEP16
+landscape_tfstate_key=FEB17-NOEU-SAP03-INFRASTRUCTURE.terraform.tfstate
+workloadkeyvault=FEB17NOEUSAP03userAC4
+workload_zone_random_id=ac4
